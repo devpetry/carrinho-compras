@@ -8,13 +8,28 @@ function adicionar(){
     let nomeProduto = produto.split('-')[0];
     let valorUnitario = parseFloat(produto.split('R$')[1]);
     let quantidade = parseInt(document.getElementById('quantidade').value);
+
+    //verificar se um produto válido foi selecionado
+    if (!produto || !produto.includes('-') || !produto.includes('R$')) {
+        alert('Selecione um produto válido.');
+        return;
+    }
+
+    //verificar se a quantidade é válida
+    if (isNaN(quantidade) || quantidade <= 0) {
+        alert('Informe uma quantidade válida (maior que zero).');
+        return;
+    }
+
     //calcular o preço, o subtotal
     let subtotal = valorUnitario * quantidade;
+    
     //adicionar no carrinho
     let carrinho = document.getElementById('lista-produtos');
     carrinho.innerHTML = carrinho.innerHTML + `<section class="carrinho__produtos__produto">
           <span class="texto-azul">${quantidade}x</span> ${nomeProduto} <span class="texto-azul">R$${subtotal}</span>
         </section>`
+    
     //atualizar valor total
     totalGeral = totalGeral + subtotal;
     let campoTotal = document.getElementById('valor-total');
